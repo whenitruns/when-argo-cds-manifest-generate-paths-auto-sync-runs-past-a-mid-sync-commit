@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rr15-presync
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+  labels:
+    rr15/rev: "A"
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        rr15/rev: "A"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: presync
+        image: busybox:1.37.0
+        command: ["sh", "-c", "echo presync rev=A; sleep 60"]

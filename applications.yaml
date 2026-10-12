@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rr15-p1
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+spec:
+  project: default
+  source:
+    repoURL: http://rr15-git:3000/wir/rr15.git
+    targetRevision: HEAD
+    path: apps/p1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rr15-p1
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rr15-p2
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: .
+spec:
+  project: default
+  source:
+    repoURL: http://rr15-git:3000/wir/rr15.git
+    targetRevision: HEAD
+    path: apps/p2
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rr15-p2
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rr15-p3
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://rr15-git:3000/wir/rr15.git
+    targetRevision: HEAD
+    path: apps/p3
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rr15-p3
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true
